@@ -42,7 +42,7 @@ namespace DepositCheckManager
 
         private async void ScanImages()
         {
-            if(folderPath == null)
+            if (folderPath == null)
             {
                 MessageBox.Show("You must select a folder path under File > Set Folder Path");
             }
@@ -50,11 +50,11 @@ namespace DepositCheckManager
             {
                 btnScan.Enabled = false;
                 btnScan.Text = "Scanning...";
-                await Scanner.ScanAndSave(folderPath, comboBuildingName.SelectedItem.ToString(), dateTimeYear.Value.ToString("yyyy"), dateTimeMonth.Value.ToString("MMMM"));
+                await Scanner.ScanAndSave(folderPath, comboBuildingName.SelectedItem.ToString(), dateTimeYear.Value.ToString("yyyy"), dateTimeYear.Value.ToString("MMMM"));
                 btnScan.Enabled = true;
                 btnScan.Text = "Scan/Save";
             }
-            
+
         }
 
         private void LoadBuildingList()
@@ -108,6 +108,11 @@ namespace DepositCheckManager
         private void btnOpenFolder_Click(object sender, EventArgs e)
         {
             Process.Start("explorer.exe", folderPath);
+        }
+
+        private void dateTimeMonth_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
