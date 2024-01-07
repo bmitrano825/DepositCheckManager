@@ -131,7 +131,6 @@ namespace DepositCheckManager
             dateTimeMonth.ShowUpDown = true;
             dateTimeMonth.Size = new System.Drawing.Size(141, 22);
             dateTimeMonth.TabIndex = 10;
-            dateTimeMonth.Value = new DateTime(2023, 12, 1, 0, 0, 0, 0);
             // 
             // label2
             // 

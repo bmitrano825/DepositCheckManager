@@ -20,7 +20,7 @@ namespace DepositCheckManager
             folderPath = LoadSetting("FolderLocation");
             txtFolderLocation.Text = folderPath;
             LoadBuildingList();
-
+            dateTimeMonth.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1, 0, 0, 0, 0);
         }
 
         private void quitToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -110,9 +110,5 @@ namespace DepositCheckManager
             Process.Start("explorer.exe", folderPath);
         }
 
-        private void dateTimeMonth_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }
