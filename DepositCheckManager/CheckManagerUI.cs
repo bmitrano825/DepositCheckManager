@@ -20,7 +20,7 @@ namespace DepositCheckManager
             folderPath = LoadSetting("FolderLocation");
             txtFolderLocation.Text = folderPath;
             LoadBuildingList();
-
+            dateTimeMonth.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1, 0, 0, 0, 0);
         }
 
         private void quitToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -42,7 +42,7 @@ namespace DepositCheckManager
 
         private async void ScanImages()
         {
-            if(folderPath == null)
+            if (folderPath == null)
             {
                 MessageBox.Show("You must select a folder path under File > Set Folder Path");
             }
@@ -54,7 +54,7 @@ namespace DepositCheckManager
                 btnScan.Enabled = true;
                 btnScan.Text = "Scan/Save";
             }
-            
+
         }
 
         private void LoadBuildingList()
@@ -109,5 +109,6 @@ namespace DepositCheckManager
         {
             Process.Start("explorer.exe", folderPath);
         }
+
     }
 }
