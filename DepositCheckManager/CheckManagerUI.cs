@@ -50,7 +50,7 @@ namespace DepositCheckManager
             {
                 btnScan.Enabled = false;
                 btnScan.Text = "Scanning...";
-                await Scanner.ScanAndSave(folderPath, comboBuildingName.SelectedItem.ToString(), dateTimeYear.Value.ToString("yyyy"), dateTimeYear.Value.ToString("MMMM"));
+                await Scanner.ScanAndSave(folderPath, comboBuildingName.SelectedItem.ToString(), dateTimeYear.Value.ToString("yyyy"), dateTimeMonth.Value.ToString("MMMM"));
                 btnScan.Enabled = true;
                 btnScan.Text = "Scan/Save";
             }
