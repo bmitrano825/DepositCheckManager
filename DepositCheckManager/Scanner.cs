@@ -11,6 +11,15 @@ using System.Windows.Forms;
 
 public class Scanner
 {
+
+
+    /// <summary>
+    /// Async task to handle interacting with the scanner and saving the images to the specified folder. Stores the images by Bulding Name > Year > Month for easier organization.
+    /// </summary>
+    /// <param name="filepath">The specified path to save the images.</param>
+    /// <param name="buildingName">The specified building folder to save it in.</param>
+    /// <param name="year">The specified year folder to save the images in.</param>
+    /// <param name="month">The specified month folder to save the images in.</param>
     public static async Task ScanAndSave(string filepath, string buildingName, string year, string month)
     {
         string fullFolderPathMonthYear = Path.Combine(filepath, buildingName, year, month);
@@ -70,10 +79,17 @@ public class Scanner
         }
     }
 
-    public static void CompressImage(string SoucePath, string DestPath, int quality)
+
+    /// <summary>
+    /// Compresses the scanned images to save storage space
+    /// </summary>
+    /// <param name="SourcePath">Original scanned image path.</param>
+    /// <param name="DestPath">New compressed image path.</param>
+    /// <param name="quality">Quality level to save the image. Smaller the number, smaller the size.</param>
+    public static void CompressImage(string SourcePath, string DestPath, int quality)
     {
 
-        using (Bitmap bmp1 = new Bitmap(SoucePath))
+        using (Bitmap bmp1 = new Bitmap(SourcePath))
         {
             ImageCodecInfo jpgEncoder = GetEncoder(ImageFormat.Jpeg);
 
@@ -89,6 +105,11 @@ public class Scanner
         }
     }
 
+    /// <summary>
+    /// Provides a way to dynamically find the appropriate encoder for a given image format, making the code adaptable to different image types.
+    /// </summary>
+    /// <param name="format">Images current format</param>
+    /// <returns></returns>
     private static ImageCodecInfo GetEncoder(ImageFormat format)
     {
         ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
