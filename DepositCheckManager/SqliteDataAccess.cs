@@ -13,6 +13,9 @@ namespace DepositCheckManager
     public class SqliteDataAccess
     {
 
+        /// <summary>
+        /// Checks that the DB file exists.
+        /// </summary>
         public static void CheckDB()
         {
             if (File.Exists("CheckManager.db")) {
@@ -24,6 +27,10 @@ namespace DepositCheckManager
             }
         }
 
+
+        /// <summary>
+        /// Creates the DB tables if they do not already exist.
+        /// </summary>
         public static void CreateDBs()
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
@@ -33,6 +40,9 @@ namespace DepositCheckManager
             }
         }
 
+        /// <summary>
+        /// Inserts the default settings into the settings table if they don't exist.
+        /// </summary>
         public static void CreateSettings()
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
@@ -43,14 +53,23 @@ namespace DepositCheckManager
 
 
 
+        /// <summary>
+        /// Gets a list of the buildings from the buildings table and returns them in a list.
+        /// </summary>
+        /// <returns>A list of the buildings in a list</returns>
         public static List<BuildingModel> LoadBuildings() {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString())){
                 var building = cnn.Query<BuildingModel>("select * from Buildings order by BuildingName ASC", new DynamicParameters());
                 return building.ToList();
             }
 
-        } 
+        }
 
+
+        /// <summary>
+        /// Inserts a new building into the building DB
+        /// </summary>
+        /// <param name="building">A building object</param>
         public static void SaveBuilding(BuildingModel building) {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
@@ -58,6 +77,11 @@ namespace DepositCheckManager
             }
         }
 
+
+        /// <summary>
+        /// Deletes a building from the building DB
+        /// </summary>
+        /// <param name="building">A building object</param>
         public static void DeleteBuilding(BuildingModel building)
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
@@ -66,6 +90,12 @@ namespace DepositCheckManager
             }
         }
 
+
+        /// <summary>
+        /// Loads a specific settings value.
+        /// </summary>
+        /// <param name="settingName">The name of the setting to load the value for.</param>
+        /// <returns></returns>
         public static List<SettingsModel> LoadSettings(string settingName)
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
@@ -76,6 +106,10 @@ namespace DepositCheckManager
 
         }
 
+        /// <summary>
+        /// Updates the location of the folder to save images to in the DB
+        /// </summary>
+        /// <param name="folderLocation">Specified folder path</param>
         public static void UpdateFolderLocation(SettingsModel folderLocation)
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
@@ -85,6 +119,12 @@ namespace DepositCheckManager
             }
         }
 
+
+        /// <summary>
+        /// Builds the connection string for sqlite. Replaces the placeholder with the appdata folder of the user. 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         private static string LoadConnectionString(string id="Default")
         {
             var conString = ConfigurationManager.ConnectionStrings[id].ConnectionString;
