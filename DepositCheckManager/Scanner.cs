@@ -20,9 +20,9 @@ public class Scanner
     /// <param name="buildingName">The specified building folder to save it in.</param>
     /// <param name="year">The specified year folder to save the images in.</param>
     /// <param name="month">The specified month folder to save the images in.</param>
-    public static async Task ScanAndSave(string filepath, string buildingName, string year, string month)
+    public static async Task ScanAndSave(string filepath, string buildingName, string year, string month, string day)
     {
-        string fullFolderPathMonthYear = Path.Combine(filepath, buildingName, year, month);
+        string fullFolderPathMonthYear = Path.Combine(filepath, buildingName, year, month, day);
         Directory.CreateDirectory(fullFolderPathMonthYear);
 
         using (ScanningContext scanningContext = new ScanningContext(new GdiImageContext()))

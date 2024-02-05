@@ -39,11 +39,10 @@ namespace DepositCheckManager
             editBuildingsToolStripMenuItem = new ToolStripMenuItem();
             quitToolStripMenuItem1 = new ToolStripMenuItem();
             panel1 = new Panel();
-            dateTimeMonth = new DateTimePicker();
+            dateTimePicker1 = new DateTimePicker();
             label2 = new Label();
             label1 = new Label();
             comboBuildingName = new ComboBox();
-            dateTimeYear = new DateTimePicker();
             groupBox1 = new GroupBox();
             groupBox2 = new GroupBox();
             panel3 = new Panel();
@@ -109,28 +108,24 @@ namespace DepositCheckManager
             // panel1
             // 
             panel1.BackColor = System.Drawing.Color.FromArgb(255, 192, 128);
-            panel1.Controls.Add(dateTimeMonth);
+            panel1.Controls.Add(dateTimePicker1);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(label1);
             panel1.Controls.Add(comboBuildingName);
-            panel1.Controls.Add(dateTimeYear);
             panel1.Location = new System.Drawing.Point(43, 65);
             panel1.Margin = new Padding(4, 3, 4, 3);
             panel1.Name = "panel1";
             panel1.Size = new System.Drawing.Size(323, 133);
             panel1.TabIndex = 9;
             // 
-            // dateTimeMonth
+            // dateTimePicker1
             // 
-            dateTimeMonth.CalendarFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            dateTimeMonth.CustomFormat = "MMMM";
-            dateTimeMonth.Format = DateTimePickerFormat.Custom;
-            dateTimeMonth.Location = new System.Drawing.Point(73, 72);
-            dateTimeMonth.Margin = new Padding(4, 3, 4, 3);
-            dateTimeMonth.Name = "dateTimeMonth";
-            dateTimeMonth.ShowUpDown = true;
-            dateTimeMonth.Size = new System.Drawing.Size(141, 22);
-            dateTimeMonth.TabIndex = 10;
+            dateTimePicker1.CustomFormat = "MMMM d, yyyy";
+            dateTimePicker1.Format = DateTimePickerFormat.Custom;
+            dateTimePicker1.Location = new System.Drawing.Point(73, 72);
+            dateTimePicker1.Name = "dateTimePicker1";
+            dateTimePicker1.Size = new System.Drawing.Size(237, 22);
+            dateTimePicker1.TabIndex = 10;
             // 
             // label2
             // 
@@ -163,18 +158,6 @@ namespace DepositCheckManager
             comboBuildingName.Name = "comboBuildingName";
             comboBuildingName.Size = new System.Drawing.Size(200, 24);
             comboBuildingName.TabIndex = 5;
-            // 
-            // dateTimeYear
-            // 
-            dateTimeYear.CalendarFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            dateTimeYear.CustomFormat = "yyyy";
-            dateTimeYear.Format = DateTimePickerFormat.Custom;
-            dateTimeYear.Location = new System.Drawing.Point(224, 72);
-            dateTimeYear.Margin = new Padding(4, 3, 4, 3);
-            dateTimeYear.Name = "dateTimeYear";
-            dateTimeYear.ShowUpDown = true;
-            dateTimeYear.Size = new System.Drawing.Size(86, 22);
-            dateTimeYear.TabIndex = 1;
             // 
             // groupBox1
             // 
@@ -302,7 +285,6 @@ namespace DepositCheckManager
         private Label label2;
         private Label label1;
         private ComboBox comboBuildingName;
-        private DateTimePicker dateTimeYear;
         private ToolStripMenuItem quitToolStripMenuItem1;
         private GroupBox groupBox1;
         private GroupBox groupBox2;
@@ -315,7 +297,7 @@ namespace DepositCheckManager
         private TextBox txtFolderLocation;
         private Label label3;
         private PrintDialog printDialog1;
-        private DateTimePicker dateTimeMonth;
+        private DateTimePicker dateTimePicker1;
     }
 }
 

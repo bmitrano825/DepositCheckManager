@@ -20,7 +20,7 @@ namespace DepositCheckManager
             folderPath = LoadSetting("FolderLocation");
             txtFolderLocation.Text = folderPath;
             LoadBuildingList();
-            dateTimeMonth.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1, 0, 0, 0, 0);
+
         }
 
         private void quitToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -50,7 +50,7 @@ namespace DepositCheckManager
             {
                 btnScan.Enabled = false;
                 btnScan.Text = "Scanning...";
-                await Scanner.ScanAndSave(folderPath, comboBuildingName.SelectedItem.ToString(), dateTimeYear.Value.ToString("yyyy"), dateTimeMonth.Value.ToString("MMMM"));
+                await Scanner.ScanAndSave(folderPath, comboBuildingName.SelectedItem.ToString(), dateTimePicker1.Value.ToString("yyyy"), dateTimePicker1.Value.ToString("MMMM"), dateTimePicker1.Value.ToString("dd"));
                 btnScan.Enabled = true;
                 btnScan.Text = "Scan/Save";
             }

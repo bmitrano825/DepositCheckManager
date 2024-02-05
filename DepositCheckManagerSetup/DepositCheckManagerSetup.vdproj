@@ -56,6 +56,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -238,15 +246,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:DepositCheckManagerSetup"
-        "ProductCode" = "8:{B7E6E01F-453B-459E-96E8-BF7E6D14FB8F}"
-        "PackageCode" = "8:{C071E7E8-1CE5-4C4C-A11E-46BBFB38AE17}"
+        "ProductCode" = "8:{26ABAED4-55DD-4ACF-896E-BB59C7266797}"
+        "PackageCode" = "8:{309E8476-8D37-498D-A679-BF5A887E4470}"
         "UpgradeCode" = "8:{FC6E554C-9727-4560-AB06-0D243A931DB0}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.1.0"
+        "ProductVersion" = "8:1.2.0"
         "Manufacturer" = "8:Brendan Mitrano"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
