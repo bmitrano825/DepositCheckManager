@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Windows.Forms;
+using DepositCheckManager.Enums;
 
 namespace DepositCheckManager
 {
     public partial class DepositCheckManagerForm : Form
     {
         string folderPath = string.Empty;
-
+        int selectedScan = 1;
         public DepositCheckManagerForm()
         {
             InitializeComponent();
@@ -19,6 +21,7 @@ namespace DepositCheckManager
             SqliteDataAccess.CreateSettings();
             folderPath = LoadSetting("FolderLocation");
             txtFolderLocation.Text = folderPath;
+            rbScanOption_1.Checked = true;
             LoadBuildingList();
 
         }
@@ -32,7 +35,7 @@ namespace DepositCheckManager
         {
             if (comboBuildingName.SelectedIndex == -1)
             {
-                MessageBox.Show("You must select a building first.");
+                MessageBox.Show("You must select a building/account first.");
             }
             else
             {
@@ -50,7 +53,14 @@ namespace DepositCheckManager
             {
                 btnScan.Enabled = false;
                 btnScan.Text = "Scanning...";
-                await Scanner.ScanAndSave(folderPath, comboBuildingName.SelectedItem.ToString(), dateTimePicker1.Value.ToString("yyyy"), dateTimePicker1.Value.ToString("MMMM"), dateTimePicker1.Value.ToString("dd"));
+                if(selectedScan == (int)scanType.Deposit)
+                {
+                    await Scanner.ScanAndSaveDeposit(folderPath, comboBuildingName.SelectedItem.ToString(), dateTimePicker1.Value.ToString("yyyy"), dateTimePicker1.Value.ToString("MMMM"), dateTimePicker1.Value.ToString("dd"));
+                }
+                else
+                {
+                    await Scanner.ScanAndSaveBuildingChecks(folderPath, comboBuildingName.SelectedItem.ToString(), dateTimePicker1.Value.ToString("yyyy"), dateTimePicker1.Value.ToString("MMMM"), dateTimePicker1.Value.ToString("dd"));
+                }
                 btnScan.Enabled = true;
                 btnScan.Text = "Scan/Save";
             }
@@ -63,6 +73,15 @@ namespace DepositCheckManager
             foreach (var building in SqliteDataAccess.LoadBuildings())
             {
                 comboBuildingName.Items.Add(building.BuildingName);
+            }
+        }
+
+        private void LoadAccountList()
+        {
+            comboBuildingName.Items.Clear();
+            foreach (var account in SqliteDataAccess.LoadAccounts())
+            {
+                comboBuildingName.Items.Add(account.AccountName);
             }
         }
 
@@ -110,5 +129,30 @@ namespace DepositCheckManager
             Process.Start("explorer.exe", folderPath);
         }
 
+        private void rbScanOption_2_CheckedChanged(object sender, EventArgs e)
+        {
+            label1.Text = "Account:";
+            LoadAccountList();
+            selectedScan = (int)scanType.Deposit;
+            panel1.BackColor = Color.YellowGreen;
+        }
+
+        private void rbScanOption_1_CheckedChanged(object sender, EventArgs e)
+        {
+            label1.Text = "Building:";
+            LoadBuildingList();
+            selectedScan = (int)scanType.BuildingCheck;
+            panel1.BackColor = Color.FromArgb(255, 192, 128);
+        }
+
+        private void fileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
     }
 }

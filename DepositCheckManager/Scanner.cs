@@ -1,16 +1,34 @@
-﻿using System;
-using System.Drawing.Imaging;
+﻿using NAPS2.Images;
+using NAPS2.Images.Gdi;
+using NAPS2.Scan;
+using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using NAPS2.Images;
-using NAPS2.Images.Gdi;
-using NAPS2.Scan;
 using System.Windows.Forms;
 
 public class Scanner
 {
+    /// <summary>
+    /// Async task to handle interacting with the scanner and saving the images to the specified folder. Stores the images by Bulding Name > Year > Month for easier organization.
+    /// </summary>
+    /// <param name="filepath">The specified path to save the images.</param>
+    /// <param name="accountName">The specified building folder to save it in.</param>
+    /// <param name="year">The specified year folder to save the images in.</param>
+    /// <param name="month">The specified month folder to save the images in.</param>
+    public static async Task ScanAndSaveDeposit(string filepath, string accountName, string year, string month, string day)
+    {
+        string fullFolderPathMonthYear = Path.Combine(filepath, "Deposits", accountName, year, month, day, DateTime.Now.ToString("yyyyMMdd_HHmmss"));
+        await ScanAndSave(fullFolderPathMonthYear);
+    }
+
+    public static async Task ScanAndSaveBuildingChecks(string filepath, string buildingName, string year, string month, string day)
+    {
+        string fullFolderPathMonthYear = Path.Combine(filepath, buildingName, year, month, day);
+        await ScanAndSave(fullFolderPathMonthYear);
+    }
 
 
     /// <summary>
@@ -20,66 +38,66 @@ public class Scanner
     /// <param name="buildingName">The specified building folder to save it in.</param>
     /// <param name="year">The specified year folder to save the images in.</param>
     /// <param name="month">The specified month folder to save the images in.</param>
-    public static async Task ScanAndSave(string filepath, string buildingName, string year, string month, string day)
+    public static async Task ScanAndSave(string filePath)
     {
-        string fullFolderPathMonthYear = Path.Combine(filepath, buildingName, year, month, day);
-        Directory.CreateDirectory(fullFolderPathMonthYear);
-
-        using (ScanningContext scanningContext = new ScanningContext(new GdiImageContext()))
+        await Task.Run(async () =>
         {
-            scanningContext.SetUpWin32Worker();
-
-            var controller = new ScanController(scanningContext);
-            var devices = await controller.GetDeviceList(Driver.Twain);
-            var neatScanner = devices.FirstOrDefault(d => d.Name.Contains("Neat"));
-
-            var options = new ScanOptions
+            using (ScanningContext scanningContext = new ScanningContext(new GdiImageContext()))
             {
-                Device = neatScanner,
-                Dpi = 150
-            };
+                scanningContext.SetUpWin32Worker();
 
-            if (devices.Any())
-            {
-                try
+                var controller = new ScanController(scanningContext);
+                var devices = await controller.GetDeviceList(Driver.Twain);
+                var neatScanner = devices.FirstOrDefault(d => d.Name.Contains("Neat"));
+
+                var options = new ScanOptions
                 {
-                    await foreach (var image in controller.Scan(options))
+                    Device = neatScanner,
+                    Dpi = 150
+                };
+
+                if (devices.Any())
+                {
+                    try
                     {
-                        var imageGUID = Guid.NewGuid();
-
-                        var originalImagePath = fullFolderPathMonthYear + "\\" + imageGUID + ".jpg";
-
-                        image.Save(originalImagePath);
-
-                        CompressImage(originalImagePath, originalImagePath + "_compressed.jpg", 10);
-
-                        if (File.Exists(originalImagePath))
+                        await foreach (var image in controller.Scan(options))
                         {
-                            File.Delete(originalImagePath);
+                            var imageGUID = Guid.NewGuid();
+
+                            Directory.CreateDirectory(filePath);
+
+                            var originalImagePath = filePath + "\\" + imageGUID + ".jpg";
+
+                            image.Save(originalImagePath);
+
+                            CompressImage(originalImagePath, originalImagePath + "_compressed.jpg", 10);
+
+                            if (File.Exists(originalImagePath))
+                            {
+                                File.Delete(originalImagePath);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle specific TwainException error messages
+                        if (ex.Message.Contains("Feeder is empty"))
+                        {
+                            Console.WriteLine("Feeder is empty. Please load documents before scanning.");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Scanning error: {ex.Message}");
                         }
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    // Handle specific TwainException error messages
-                    if (ex.Message.Contains("Feeder is empty"))
-                    {
-                        Console.WriteLine("Feeder is empty. Please load documents before scanning.");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Scanning error: {ex.Message}");
-                    }
+                    MessageBox.Show("No scanning devices found.");
                 }
             }
-            else
-            {
-                MessageBox.Show("No scanning devices found.");
-            }
-        }
+        });
     }
-
-
     /// <summary>
     /// Compresses the scanned images to save storage space
     /// </summary>

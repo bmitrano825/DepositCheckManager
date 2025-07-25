@@ -35,8 +35,9 @@ namespace DepositCheckManager
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                cnn.Execute("CREATE TABLE IF NOT EXISTS  [Buildings] (  [Id] bigint NOT NULL UNIQUE, [BuildingName] text NOT NULL, CONSTRAINT [sqlite_master_PK_Buildings] PRIMARY KEY ([Id]));");
-                cnn.Execute("CREATE TABLE IF NOT EXISTS  [settings] (  [Id] bigint NOT NULL UNIQUE, [SettingsName] text NOT NULL UNIQUE, [SettingsValue] text NULL, CONSTRAINT[sqlite_master_PK_settings] PRIMARY KEY([Id]));");
+                cnn.Execute("CREATE TABLE IF NOT EXISTS  [Buildings] (  [Id] INTEGER NOT NULL UNIQUE, [BuildingName] text NOT NULL, CONSTRAINT [sqlite_master_PK_Buildings] PRIMARY KEY ([Id]));");
+                cnn.Execute("CREATE TABLE IF NOT EXISTS  [Accounts] (  [Id] INTEGER NOT NULL UNIQUE, [AccountName] text NOT NULL, CONSTRAINT [sqlite_master_PK_Accounts] PRIMARY KEY ([Id]));");
+                cnn.Execute("CREATE TABLE IF NOT EXISTS  [settings] (  [Id] INTEGER NOT NULL UNIQUE, [SettingsName] text NOT NULL UNIQUE, [SettingsValue] text NULL, CONSTRAINT[sqlite_master_PK_settings] PRIMARY KEY([Id]));");
             }
         }
 
@@ -62,7 +63,19 @@ namespace DepositCheckManager
                 var building = cnn.Query<BuildingModel>("select * from Buildings order by BuildingName ASC", new DynamicParameters());
                 return building.ToList();
             }
+        }
 
+        /// <summary>
+        /// Gets a list of the accounts from the accounts table and returns them in a list.
+        /// </summary>
+        /// <returns>A list of the accounts in a list</returns>
+        public static List<AccountModel> LoadAccounts()
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                var account = cnn.Query<AccountModel>("select * from Accounts order by AccountName ASC", new DynamicParameters());
+                return account.ToList();
+            }
         }
 
 
@@ -77,6 +90,18 @@ namespace DepositCheckManager
             }
         }
 
+        /// <summary>
+        /// Inserts a new account into the account DB
+        /// </summary>
+        /// <param name="account">A account object</param>
+        public static void SaveAccount(AccountModel account)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                cnn.Execute("insert into Accounts(AccountName) VALUES (@AccountName)", account);
+            }
+        }
+
 
         /// <summary>
         /// Deletes a building from the building DB
@@ -87,6 +112,18 @@ namespace DepositCheckManager
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
                 cnn.Execute("delete from Buildings where BuildingName=@BuildingName", building);
+            }
+        }
+
+        /// <summary>
+        /// Deletes a account from the account DB
+        /// </summary>
+        /// <param name="account">A account object</param>
+        public static void DeleteAccount(AccountModel account)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                cnn.Execute("delete from Accounts where AccountName=@AccountName", account);
             }
         }
 

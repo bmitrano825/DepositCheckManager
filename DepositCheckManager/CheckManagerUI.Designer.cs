@@ -52,11 +52,15 @@ namespace DepositCheckManager
             txtFolderLocation = new TextBox();
             label3 = new Label();
             printDialog1 = new PrintDialog();
+            rbScanOption_1 = new RadioButton();
+            rbScanOption_2 = new RadioButton();
+            groupBox3 = new GroupBox();
             menuStrip1.SuspendLayout();
             panel1.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             panel3.SuspendLayout();
+            groupBox3.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
@@ -66,9 +70,10 @@ namespace DepositCheckManager
             menuStrip1.Location = new System.Drawing.Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new Padding(7, 2, 0, 2);
-            menuStrip1.Size = new System.Drawing.Size(867, 24);
+            menuStrip1.Size = new System.Drawing.Size(1145, 24);
             menuStrip1.TabIndex = 3;
             menuStrip1.Text = "menuStrip1";
+            menuStrip1.ItemClicked += menuStrip1_ItemClicked;
             // 
             // fileToolStripMenuItem
             // 
@@ -76,6 +81,7 @@ namespace DepositCheckManager
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             fileToolStripMenuItem.Text = "File";
+            fileToolStripMenuItem.Click += fileToolStripMenuItem_Click;
             // 
             // setPathToolStripMenuItem
             // 
@@ -87,15 +93,15 @@ namespace DepositCheckManager
             // setFolderPathToolStripMenuItem
             // 
             setFolderPathToolStripMenuItem.Name = "setFolderPathToolStripMenuItem";
-            setFolderPathToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            setFolderPathToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             setFolderPathToolStripMenuItem.Text = "Set Folder Path";
             setFolderPathToolStripMenuItem.Click += setFolderPathToolStripMenuItem_Click;
             // 
             // editBuildingsToolStripMenuItem
             // 
             editBuildingsToolStripMenuItem.Name = "editBuildingsToolStripMenuItem";
-            editBuildingsToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
-            editBuildingsToolStripMenuItem.Text = "Edit Buildings";
+            editBuildingsToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            editBuildingsToolStripMenuItem.Text = "Edit Buildings and Accounts";
             editBuildingsToolStripMenuItem.Click += editBuildingsToolStripMenuItem_Click;
             // 
             // quitToolStripMenuItem1
@@ -164,7 +170,7 @@ namespace DepositCheckManager
             groupBox1.Anchor = AnchorStyles.None;
             groupBox1.Controls.Add(panel1);
             groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            groupBox1.Location = new System.Drawing.Point(13, 43);
+            groupBox1.Location = new System.Drawing.Point(288, 40);
             groupBox1.Margin = new Padding(4, 3, 4, 3);
             groupBox1.Name = "groupBox1";
             groupBox1.Padding = new Padding(4, 3, 4, 3);
@@ -178,7 +184,7 @@ namespace DepositCheckManager
             groupBox2.Anchor = AnchorStyles.None;
             groupBox2.Controls.Add(panel3);
             groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            groupBox2.Location = new System.Drawing.Point(440, 43);
+            groupBox2.Location = new System.Drawing.Point(715, 40);
             groupBox2.Margin = new Padding(4, 3, 4, 3);
             groupBox2.Name = "groupBox2";
             groupBox2.Padding = new Padding(4, 3, 4, 3);
@@ -213,7 +219,7 @@ namespace DepositCheckManager
             // 
             // btnOpenFolder
             // 
-            btnOpenFolder.Location = new System.Drawing.Point(766, 316);
+            btnOpenFolder.Location = new System.Drawing.Point(901, 326);
             btnOpenFolder.Margin = new Padding(4, 3, 4, 3);
             btnOpenFolder.Name = "btnOpenFolder";
             btnOpenFolder.Size = new System.Drawing.Size(88, 27);
@@ -225,7 +231,7 @@ namespace DepositCheckManager
             // txtFolderLocation
             // 
             txtFolderLocation.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            txtFolderLocation.Location = new System.Drawing.Point(155, 314);
+            txtFolderLocation.Location = new System.Drawing.Point(290, 324);
             txtFolderLocation.Margin = new Padding(4, 3, 4, 3);
             txtFolderLocation.Name = "txtFolderLocation";
             txtFolderLocation.ReadOnly = true;
@@ -236,7 +242,7 @@ namespace DepositCheckManager
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(15, 327);
+            label3.Location = new System.Drawing.Point(150, 337);
             label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(125, 15);
@@ -247,11 +253,51 @@ namespace DepositCheckManager
             // 
             printDialog1.UseEXDialog = true;
             // 
+            // rbScanOption_1
+            // 
+            rbScanOption_1.BackColor = System.Drawing.SystemColors.Control;
+            rbScanOption_1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            rbScanOption_1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            rbScanOption_1.Location = new System.Drawing.Point(48, 87);
+            rbScanOption_1.Name = "rbScanOption_1";
+            rbScanOption_1.Size = new System.Drawing.Size(150, 35);
+            rbScanOption_1.TabIndex = 25;
+            rbScanOption_1.Text = "Rent Checks";
+            rbScanOption_1.UseVisualStyleBackColor = false;
+            rbScanOption_1.CheckedChanged += rbScanOption_1_CheckedChanged;
+            // 
+            // rbScanOption_2
+            // 
+            rbScanOption_2.AutoSize = true;
+            rbScanOption_2.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            rbScanOption_2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            rbScanOption_2.Location = new System.Drawing.Point(48, 128);
+            rbScanOption_2.Name = "rbScanOption_2";
+            rbScanOption_2.Size = new System.Drawing.Size(102, 34);
+            rbScanOption_2.TabIndex = 24;
+            rbScanOption_2.TabStop = true;
+            rbScanOption_2.Text = "Deposit";
+            rbScanOption_2.UseVisualStyleBackColor = true;
+            rbScanOption_2.CheckedChanged += rbScanOption_2_CheckedChanged;
+            // 
+            // groupBox3
+            // 
+            groupBox3.Anchor = AnchorStyles.None;
+            groupBox3.Controls.Add(rbScanOption_1);
+            groupBox3.Controls.Add(rbScanOption_2);
+            groupBox3.Location = new System.Drawing.Point(19, 39);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new System.Drawing.Size(262, 263);
+            groupBox3.TabIndex = 26;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "Choose One:";
+            // 
             // DepositCheckManagerForm
             // 
             AutoScaleMode = AutoScaleMode.None;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            ClientSize = new System.Drawing.Size(867, 355);
+            ClientSize = new System.Drawing.Size(1145, 367);
+            Controls.Add(groupBox3);
             Controls.Add(btnOpenFolder);
             Controls.Add(label3);
             Controls.Add(txtFolderLocation);
@@ -273,6 +319,8 @@ namespace DepositCheckManager
             groupBox1.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
             panel3.ResumeLayout(false);
+            groupBox3.ResumeLayout(false);
+            groupBox3.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -298,6 +346,9 @@ namespace DepositCheckManager
         private Label label3;
         private PrintDialog printDialog1;
         private DateTimePicker dateTimePicker1;
+        private RadioButton rbScanOption_1;
+        private RadioButton rbScanOption_2;
+        private GroupBox groupBox3;
     }
 }
 
